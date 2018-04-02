@@ -8,6 +8,7 @@ Ueditor七牛云存储版本
 #### 上传到七牛云存储 配置
 
 > `config.php` 内容如下
+
 	return array(
 		'upload_type' => 'qiniu',  // [qiniu|local] 设置上传方式 qiniu 上传到七牛云存储 ,local 上传到本地
 		/* 本地上传配置信息 */
