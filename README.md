@@ -75,7 +75,7 @@ Ueditor七牛云存储版本
 ### 技术支持
 
 `原作者邮箱 : admin@widuu.com`
-`本人邮箱 : pxbfym@qq.com`
+`本人邮箱 : master@pengxb.com`
 
 
 ## 本人所做的详细修改请阅：[ueditor上传文件到七牛云私有空间](https://pengxb.com/article/32 "ueditor上传文件到七牛云私有空间")
