@@ -6,7 +6,7 @@
  * @author   widuu <admin@widuu.com>
  * @document https://github.com/widuu/qiniu_ueditor_1.4.3
  */
-session_start();
+
 class QiniuDriver{
 
 	private  $qiniu_rsf_host = 'http://rsf.qbox.me';
@@ -361,6 +361,9 @@ class QiniuDriver{
 			$url  = trim($this->host , "/")."/$(key)?watermark/1/image/{$water_image}";
 			$url .= "/dissolve/{$this->dissolve}/gravity/{$this->gravity}/dx/{$this->dx}/dy/{$this->dy}";
 		}
+		
+		//私有空间专属，公有空间可注释
+        $url = $this->privateDownloadUrl($url);
 
 		$return_body = array(
 				"url" 	=> $url,
@@ -404,7 +407,7 @@ class QiniuDriver{
 			'returnBody' => $this->getDirectReturnBody(),
 			'deadline'   => $time,
 			'scope'      => $scope
-		);
+			);
 
 		$safe_data = $this->SafeBase64Encode(json_encode($put_policy));
 		return $this->getSign($safe_data).':'.$safe_data;
@@ -495,12 +498,26 @@ class QiniuDriver{
                 break;
             }
         }
-        if ($this->is_private == 1) {
-	        //私有空间专属，公有空间可注释
-	        // $items['url'] = 'https://image.pengxb.com/uploads/0330/1522372891000abd6.mp4';
-	        $items['url'] = $this->privateDownloadUrl($items['url']);
-        }
+        //私有空间专属，公有空间可注释
+        $items['url'] = $this->privateDownloadUrl($items['url']);
 	    return $items;
+	}
+	 
+	/*私有空间专属，公有空间可注释*/
+	private function privateDownloadUrl($baseUrl, $expires = 3600)
+	{
+	    $deadline = time() + $expires;
+	 
+	    $pos = strpos($baseUrl, '?');
+	    if ($pos !== false) {
+	        $baseUrl .= '&e=';
+	    } else {
+	        $baseUrl .= '?e=';
+	    }
+	    $baseUrl .= $deadline;
+	 
+	    $token = $this->getSign($baseUrl);
+	    return "$baseUrl&token=$token";
 	}
 
     /**
@@ -513,21 +530,6 @@ class QiniuDriver{
 		$find = array("\\", "\"");
 		$replace = array("\\\\", "\\\"");
 		return str_replace($find, $replace, $str);
-	}
-	 
-	/*私有空间专属，公有空间可注释*/
-	private function privateDownloadUrl($baseUrl, $expires = 3600)
-	{
-	    $pos = strpos($baseUrl, '?');
-	    if ($pos !== false) {
-	        $baseUrl .= '&e=';
-	    } else {
-	        $baseUrl .= '?e=';
-	    }
-	    $deadline = time() + $expires;
-	    $baseUrl .= $deadline;
-	    $token = $this->getSign($baseUrl);
-	    return "$baseUrl&token=$token";
 	}
 	
 }
