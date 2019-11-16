@@ -101,13 +101,4 @@ Ueditor七牛云存储版本
     "ChunkUploadQiniuUrl": "http://upload.qiniu.com", /* 分块上传的首块上传域名为：上传到华东一区的域名为up.qiniu.com、up-z0.qiniu.com和upload.qiniu.com；上传到华北一区的域名为up-z1.qiniu.com和upload-z1.qiniu.com */
     "makeFileActionName" : "makeFile",  /* 合成文件的url方法 */
 
-### 技术支持
 
-邮箱 : admin@widuu.com
-
-### 捐赠
-
-本项目是个人业余时间开发和提供技术支持，欢迎捐赠！
-
-![支付宝支付](./images/alipay.jpg)
-![微信支付](./images/wechat.jpg)
